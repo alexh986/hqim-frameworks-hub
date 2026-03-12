@@ -1996,6 +1996,112 @@ const scienceSkillsData = [
       artifacts: ["Initial argument (BEFORE AI)", "Chat transcript showing argument defense", "Revised argument"],
       reflection: "What was the strongest counterargument you had to address?"
     }
+  },
+  {
+    id: 7,
+    title: "Using Mathematics & Computational Thinking",
+    standards: "SEP-5",
+    icon: Calculator,
+    description: "Students use mathematical and computational thinking to describe and predict phenomena.",
+    humanLift: [
+      { step: "Identify Quantities and Relationships", detail: "Determine what can be measured or calculated and how variables relate." },
+      { step: "Choose Appropriate Tools", detail: "Select mathematical representations (graphs, equations, simulations) that fit the problem." },
+      { step: "Perform Calculations or Build Models", detail: "Apply mathematical reasoning to quantify relationships and make predictions." },
+      { step: "Interpret Results in Context", detail: "Explain what the mathematical results mean for the phenomenon." }
+    ],
+    aiExtension: {
+      role: "Computation Consultant",
+      description: "AI helps students evaluate their mathematical reasoning—but does not perform calculations or build models for them.",
+      upholdRigor: {
+        socratic: [
+          { move: "Question assumptions in mathematical models", prompt: "I'm using this equation to model the phenomenon. Ask me questions about the assumptions I'm making." }
+        ],
+        resistance: [
+          { move: "Challenge appropriateness of mathematical tools", prompt: "I chose to represent this with a linear model. Challenge me—is that the right choice?" }
+        ],
+        complexity: [
+          { move: "Explore limitations of the model", prompt: "Ask me about where my mathematical model might break down or not apply." }
+        ],
+        mirroring: [
+          { move: "Reflect back mathematical reasoning", prompt: "Walk through my calculation step by step. Does my reasoning make sense?" }
+        ],
+        simulation: [
+          { move: "Test predictions against edge cases", prompt: "My model predicts this. Ask me what happens in extreme cases." }
+        ],
+        information: [
+          { move: "Clarify mathematical concepts", prompt: "What mathematical concepts are relevant here? Help me understand without doing the work." }
+        ],
+        feedback: [
+          { move: "Identify gaps in mathematical reasoning", prompt: "What steps am I missing in my mathematical approach? Point to gaps without filling them." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Performing calculations", prompt: "Can you calculate this for me?" },
+        { move: "Building mathematical models", prompt: "Can you create an equation that models this?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Strengthen Your Mathematical Analysis",
+      description: "Based on gaps identified in the AI conversation, revise your mathematical reasoning.",
+      criteria: ["Appropriate mathematical tools selected and justified", "Results interpreted in scientific context"]
+    },
+    evidence: {
+      artifacts: ["Initial calculations/models (BEFORE AI)", "Chat transcript showing mathematical reasoning", "Revised analysis with explanations"],
+      reflection: "What mathematical assumption did you reconsider after the AI conversation?"
+    }
+  },
+  {
+    id: 8,
+    title: "Obtaining, Evaluating, & Communicating Information",
+    standards: "SEP-8",
+    icon: BookOpen,
+    description: "Students obtain, evaluate, and communicate scientific information from multiple sources.",
+    humanLift: [
+      { step: "Identify Information Needs", detail: "Determine what information is needed and where to find it." },
+      { step: "Locate Multiple Sources", detail: "Find diverse sources including primary literature, data sets, and expert communications." },
+      { step: "Evaluate Source Credibility", detail: "Assess reliability, bias, and relevance of each source." },
+      { step: "Synthesize Across Sources", detail: "Integrate information from multiple sources to build understanding." }
+    ],
+    aiExtension: {
+      role: "Source Evaluator",
+      description: "AI challenges student evaluation of sources and synthesis—but does not find or evaluate sources for them.",
+      upholdRigor: {
+        socratic: [
+          { move: "Question source evaluation criteria", prompt: "I think this source is reliable because of these reasons. Ask me about my criteria for judging credibility." }
+        ],
+        resistance: [
+          { move: "Challenge synthesis conclusions", prompt: "I'm concluding this based on these sources. Challenge me—am I reading them correctly?" }
+        ],
+        complexity: [
+          { move: "Probe for conflicting information", prompt: "Ask me how I would handle sources that disagree with each other." }
+        ],
+        mirroring: [
+          { move: "Reflect back information synthesis", prompt: "Summarize how I've connected information across sources. Does my synthesis make sense?" }
+        ],
+        simulation: [
+          { move: "Test source evaluation in new contexts", prompt: "If I found a new source that said this, how would I evaluate it?" }
+        ],
+        information: [
+          { move: "Clarify source types", prompt: "What types of scientific sources exist? Help me categorize what I'm using." }
+        ],
+        feedback: [
+          { move: "Identify gaps in source coverage", prompt: "What perspectives or types of evidence am I missing? Point to gaps without filling them." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Finding sources", prompt: "Can you find sources about this topic for me?" },
+        { move: "Summarizing sources", prompt: "Can you summarize what this source says?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Strengthen Your Source Synthesis",
+      description: "Based on gaps identified in the AI conversation, revise your synthesis of scientific information.",
+      criteria: ["Multiple credible sources evaluated", "Synthesis addresses conflicting information"]
+    },
+    evidence: {
+      artifacts: ["Source evaluation notes (BEFORE AI)", "Chat transcript showing source evaluation", "Final synthesis document"],
+      reflection: "How did your understanding of source credibility change after the AI conversation?"
+    }
   }
 ];
 

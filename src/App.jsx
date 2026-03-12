@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, ChevronRight, Target, Shuffle, MessageSquare, Compass, Wrench, Focus, Grid3X3, RotateCw, CheckCircle, XCircle, AlertCircle, Calculator, TrendingUp, Send, Loader2, Sparkles, ClipboardList, MessageCircle, HelpCircle, Shield, Layers, Eye, Play, Info, BookOpen, Home, ExternalLink, ArrowRight, FlaskConical, Microscope, LineChart, Beaker, Atom, Lightbulb } from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronRight, Target, Shuffle, MessageSquare, Compass, Wrench, Focus, Grid3X3, RotateCw, CheckCircle, XCircle, AlertCircle, Calculator, TrendingUp, Send, Loader2, Sparkles, ClipboardList, MessageCircle, HelpCircle, Shield, Layers, Eye, Play, Info, BookOpen, Home, ExternalLink, ArrowRight, FlaskConical, Microscope, LineChart, Beaker, Atom, Lightbulb, FileText, Scale } from 'lucide-react';
 import './App.css';
 
 // ============================================
 // LANDING PAGE COMPONENT
 // ============================================
-function LandingPage({ onSelectMath, onSelectScience }) {
+function LandingPage({ onSelectMath, onSelectScience, onSelectHistory }) {
   const subjects = [
     {
       id: 'ela',
@@ -37,7 +37,7 @@ function LandingPage({ onSelectMath, onSelectScience }) {
       name: 'History',
       description: 'A framework for AI use in history and social studies — preserving critical analysis of sources and historical thinking.',
       icon: ClipboardList,
-      status: 'coming',
+      status: 'beta',
       external: false
     }
   ];
@@ -69,6 +69,8 @@ function LandingPage({ onSelectMath, onSelectScience }) {
                     onSelectMath();
                   } else if (subject.id === 'science') {
                     onSelectScience();
+                  } else if (subject.id === 'history') {
+                    onSelectHistory();
                   }
                 }
               }}
@@ -2941,6 +2943,1411 @@ function ScienceFramework({ onBack }) {
 }
 
 // ============================================
+// HISTORY SKILLS DATA
+// ============================================
+const historySkillsData = [
+  {
+    id: 1,
+    title: "Sourcing",
+    standards: "SHEG, C3: D2.His.6-8, D3.1-4",
+    icon: FileText,
+    description: "Students evaluate the origin, purpose, audience, and point of view of primary and secondary sources before using them as evidence.",
+    humanLift: [
+      { step: "Identify the Source", detail: "Before reading, note who created it, when, where, and in what format." },
+      { step: "Consider the Author's Purpose", detail: "Ask: Why was this created? What was the author trying to accomplish?" },
+      { step: "Identify the Intended Audience", detail: "Determine who was meant to read, view, or hear this source." },
+      { step: "Examine Point of View", detail: "Consider how the author's background, experiences, or position might shape their perspective." },
+      { step: "Assess Reliability", detail: "Determine what this source can and cannot tell us based on its origin and purpose." }
+    ],
+    aiExtension: {
+      role: "Source Interrogator",
+      description: "AI asks probing questions about source reliability and perspective—but does not evaluate sources for the student.",
+      upholdRigor: {
+        socratic: [
+          { move: "Probe for hidden biases or agendas", prompt: "I identified this author's point of view. Ask me questions that help me consider biases I might be missing." },
+          { move: "Suggest categories to consider (but not answers)", prompt: "Ask me questions about aspects of this source I haven't analyzed yet—purpose, context, perspective." },
+          { move: "Question evidence for authorship claims", prompt: "Ask me what evidence I have for my claims about who wrote this and why." }
+        ],
+        resistance: [
+          { move: "Question assumptions about authorship", prompt: "Here is my analysis of this source's author. Ask me questions that challenge my assumptions about who wrote it and why." },
+          { move: "Challenge claims about audience", prompt: "Here is who I think this source was written for. Ask me questions about whether I'm right about the audience." },
+          { move: "Push back on reliability claims", prompt: "I think this source is reliable for certain purposes. Challenge me—am I overstating what it can tell us?" }
+        ],
+        complexity: [
+          { move: "Introduce alternative interpretations of purpose", prompt: "I identified one purpose for this source. Ask me about other possible purposes I haven't considered." },
+          { move: "Layer multiple perspectives on authorship", prompt: "Ask me how different historians might interpret this source's origins and reliability." },
+          { move: "Explore source limitations", prompt: "What can't this source tell us? Ask me questions about its limitations I haven't addressed." }
+        ],
+        mirroring: [
+          { move: "Reflect back sourcing analysis", prompt: "Summarize my analysis of this source's reliability. Does my reasoning sound complete when you say it back?" },
+          { move: "Surface implicit assumptions", prompt: "What am I assuming about this source that I haven't stated? Reflect back my hidden assumptions." },
+          { move: "Articulate evidence-claim connections", prompt: "How am I connecting my sourcing analysis to my historical claims? Help me see my own reasoning." }
+        ],
+        simulation: [
+          { move: "Test sourcing against different contexts", prompt: "Would my analysis of this source change if it were from a different time or place? Help me stress-test my reasoning." },
+          { move: "Project how other historians might evaluate", prompt: "How might a historian with a different specialty evaluate this source? Walk me through alternative perspectives." },
+          { move: "Model corroboration needs", prompt: "What other sources would I need to corroborate or challenge this one? Help me think about triangulation." }
+        ],
+        information: [
+          { move: "Clarify source types", prompt: "What types of primary sources exist (government documents, personal letters, newspapers)? Help me categorize mine." },
+          { move: "Explain sourcing frameworks", prompt: "What questions do historians typically ask when sourcing? Describe the framework without applying it for me." },
+          { move: "Identify genre conventions", prompt: "What conventions govern this type of document? Explain how genre affects interpretation." }
+        ],
+        feedback: [
+          { move: "Surface gaps in sourcing analysis", prompt: "Based on my sourcing notes, what questions should I still be asking? Help me find the gaps." },
+          { move: "Flag unsupported claims", prompt: "Where am I making claims about this source that I haven't supported? Point to weaknesses." },
+          { move: "Note missing considerations", prompt: "What standard sourcing questions have I not addressed? Point them out without answering them." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Assessing source reliability for the student", prompt: "Is this a reliable source?" },
+        { move: "Providing historical context student hasn't identified", prompt: "What was happening historically when this was written?" },
+        { move: "Analyzing the author's perspective", prompt: "What is this author's bias?" },
+        { move: "Telling student what the source can and cannot tell us", prompt: "What are the limitations of this source?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Integrate Sourcing into Your Analysis",
+      description: "Based on the AI conversation, revise your source evaluation. Ensure your final analysis integrates sourcing considerations into your argument—explaining not just what the source says, but how its origin, purpose, and perspective shape what it can and cannot tell us.",
+      criteria: [
+        "Source reliability explicitly addressed in analysis",
+        "Author's perspective integrated into interpretation",
+        "Limitations acknowledged and accounted for"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "Completed Sourcing Tool (BEFORE AI)",
+        "Chat transcript showing source evaluation discussion",
+        "Final analysis with sourcing integrated into argument"
+      ],
+      reflection: "What aspect of this source's reliability did you initially overlook? How did the AI conversation help you see it?"
+    }
+  },
+  {
+    id: 2,
+    title: "Contextualization",
+    standards: "C3: D2.His.1-5, AP Theme Alignment",
+    icon: BookOpen,
+    description: "Students connect historical events and processes to specific circumstances of time and place, distinguishing broad and narrow context.",
+    humanLift: [
+      { step: "Identify the Time and Place", detail: "Establish when and where the event occurred with specificity." },
+      { step: "Distinguish Broad from Narrow Context", detail: "Separate long-term trends and regional patterns from immediate circumstances." },
+      { step: "Connect to Prior Knowledge", detail: "Link the event to what you already know about this era, region, or theme." },
+      { step: "Consider Multiple Scales", detail: "Examine local, regional, and global factors that shaped the event." },
+      { step: "Identify Causal Links", detail: "Determine how context helps explain why the event happened when and where it did." }
+    ],
+    aiExtension: {
+      role: "Context Challenger",
+      description: "AI pressure-tests student contextual claims and surfaces missing connections—but does not provide historical context directly.",
+      upholdRigor: {
+        socratic: [
+          { move: "Suggest categories of context to explore", prompt: "Ask me questions about different types of context—political, economic, social, cultural—I should consider." },
+          { move: "Probe for temporal connections", prompt: "Ask me questions about how events before and after this moment help explain what happened." },
+          { move: "Question geographic considerations", prompt: "Ask me questions about how location and geography shaped this historical moment." }
+        ],
+        resistance: [
+          { move: "Challenge the scope of context provided", prompt: "Here is my contextual analysis. Ask me questions that help me determine if I've focused too narrowly or too broadly." },
+          { move: "Question causal links between context and event", prompt: "I identified these background factors. Challenge my causal reasoning—ask me how I know these actually influenced the event." },
+          { move: "Push back on presentism", prompt: "Challenge whether I'm projecting modern assumptions onto historical actors. Am I understanding their context?" }
+        ],
+        complexity: [
+          { move: "Introduce competing contextual factors", prompt: "What other contextual factors might have been at play? Ask me about forces I haven't considered." },
+          { move: "Layer multiple historical scales", prompt: "Ask me how this event looks different at local, national, and global scales." },
+          { move: "Explore counterfactual implications", prompt: "What if the context had been different? Ask me questions about how changes in background would affect outcomes." }
+        ],
+        mirroring: [
+          { move: "Surface assumptions about historical conditions", prompt: "Ask me questions that help me surface assumptions I'm making about people in this time and place." },
+          { move: "Reflect back contextual claims", prompt: "Summarize my contextual analysis. Does my reasoning about background factors sound complete?" },
+          { move: "Articulate causal chain", prompt: "How am I connecting context to outcomes? Help me see my own causal reasoning." }
+        ],
+        simulation: [
+          { move: "Test context against different cases", prompt: "Would my contextual analysis apply to similar events in different places? Help me check its scope." },
+          { move: "Project contextual effects forward", prompt: "If this context continued, what would I expect to happen next? Help me test my understanding." },
+          { move: "Model historical actor perspectives", prompt: "How would people living in this context have understood their situation? Help me think through their worldview." }
+        ],
+        information: [
+          { move: "Clarify types of historical context", prompt: "What types of context do historians typically consider (political, economic, social, intellectual)? Help me categorize." },
+          { move: "Explain periodization concepts", prompt: "How do historians define historical periods? Explain so I can place my event appropriately." },
+          { move: "Identify historiographical frameworks", prompt: "What frameworks do historians use to analyze context? Describe without applying them for me." }
+        ],
+        feedback: [
+          { move: "Probe for missing scales of analysis", prompt: "Ask me questions about what scales of analysis (local, regional, global) I might be overlooking." },
+          { move: "Flag thin contextual claims", prompt: "Where is my contextual analysis underdeveloped? Point to weak areas without filling them in." },
+          { move: "Note disconnected context", prompt: "Where have I listed context without connecting it to my argument? Identify gaps in integration." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Supplying historical facts", prompt: "What was happening in Europe during this time?" },
+        { move: "Filling in contextual gaps", prompt: "What context am I missing?" },
+        { move: "Explaining causal connections", prompt: "How did the Industrial Revolution influence this event?" },
+        { move: "Providing background information", prompt: "Give me background on this historical period." }
+      ]
+    },
+    returnToHuman: {
+      task: "Refine Your Contextual Analysis",
+      description: "Based on the AI conversation, revise your contextualization. Add missing scales of analysis, strengthen causal connections, and ensure your introduction or argument demonstrates how context shaped the event—not just that context exists.",
+      criteria: [
+        "Both broad and narrow context included",
+        "Causal links between context and event explicit",
+        "Context integrated into argument (not just listed)"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "Context notes categorized as broad/narrow (BEFORE AI)",
+        "Chat transcript showing context refinement",
+        "Final work with context integrated into argument"
+      ],
+      reflection: "What contextual factor did you add or revise after the AI conversation? How did it strengthen your analysis?"
+    }
+  },
+  {
+    id: 3,
+    title: "Claim Testing",
+    standards: "C3: D3.1-4, D4.1-6, SHEG",
+    icon: Scale,
+    description: "Students evaluate the strength of historical claims by examining evidence, logic, and reasoning—their own and others'.",
+    humanLift: [
+      { step: "Identify the Claim", detail: "State the argument or assertion being made clearly and specifically." },
+      { step: "Examine the Evidence", detail: "Identify what evidence supports the claim and assess its quality." },
+      { step: "Check the Logic", detail: "Determine if the reasoning connecting evidence to claim is sound." },
+      { step: "Consider Counter-Evidence", detail: "Identify facts or sources that might challenge or complicate the claim." },
+      { step: "Assess Overall Strength", detail: "Determine how well-supported the claim is and what would strengthen or weaken it." }
+    ],
+    aiExtension: {
+      role: "Claim Skeptic",
+      description: "AI challenges claims and evidence while surfacing logical gaps—but does not evaluate claims for the student.",
+      upholdRigor: {
+        socratic: [
+          { move: "Push for more specific claims", prompt: "Ask me questions that help me make my claim more specific and defensible." },
+          { move: "Probe evidence-claim connections", prompt: "Ask me questions about how my evidence actually supports my claim. What's the logical link?" },
+          { move: "Question claim scope", prompt: "Ask me whether my claim is too broad or too narrow for the evidence I have." }
+        ],
+        resistance: [
+          { move: "Challenge the strength of evidence cited", prompt: "Here is a claim from this article. Ask me questions that help me evaluate the quality of evidence the author uses." },
+          { move: "Push back on logical leaps", prompt: "I'm moving from evidence to conclusion. Challenge the logical steps I'm taking." },
+          { move: "Question evidence sufficiency", prompt: "I think I have enough evidence for this claim. Push back—is it really sufficient?" }
+        ],
+        complexity: [
+          { move: "Surface potential counterarguments", prompt: "Here is my claim and evidence. Ask me questions that help me anticipate what counterarguments I should address." },
+          { move: "Introduce complicating evidence", prompt: "What evidence might complicate or contradict my claim? Ask me about sources I haven't considered." },
+          { move: "Layer competing interpretations", prompt: "How might other historians interpret this same evidence differently? Challenge my reading." }
+        ],
+        mirroring: [
+          { move: "Question unstated assumptions", prompt: "Here is my thesis. Ask me questions that help me surface assumptions I'm making that a reader might not share." },
+          { move: "Reflect back argument structure", prompt: "Summarize the structure of my argument. Does my reasoning sound valid when you say it back?" },
+          { move: "Articulate warrant connections", prompt: "How am I connecting evidence to claim? Help me see my own warrants." }
+        ],
+        simulation: [
+          { move: "Test claim against new cases", prompt: "Would my claim hold up if applied to similar historical cases? Help me check its validity." },
+          { move: "Model critic responses", prompt: "How would a skeptical historian respond to my claim? Walk me through their objections." },
+          { move: "Project claim implications", prompt: "If my claim is true, what else should be true? Help me test the implications." }
+        ],
+        information: [
+          { move: "Clarify argument components", prompt: "What are the parts of a historical argument (claim, evidence, warrant, acknowledgment)? Help me identify mine." },
+          { move: "Explain evidence hierarchies", prompt: "What makes some historical evidence stronger than others? Explain the criteria." },
+          { move: "Identify logical fallacies", prompt: "What logical fallacies should I watch for in historical arguments? Describe them so I can check my own." }
+        ],
+        feedback: [
+          { move: "Probe logical connections", prompt: "I'm developing this argument. Ask me questions that help me find logical gaps in my reasoning." },
+          { move: "Flag weak evidence links", prompt: "Where is my evidence-to-claim connection weakest? Point to problems without fixing them." },
+          { move: "Note unaddressed objections", prompt: "What objections to my claim have I not addressed? Identify them without making arguments for me." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Judging whether claims are valid", prompt: "Is this a good argument?" },
+        { move: "Supplying counter-evidence", prompt: "What evidence contradicts this claim?" },
+        { move: "Identifying logical fallacies for the student", prompt: "What's wrong with this argument?" },
+        { move: "Evaluating the historian's argument", prompt: "Is this historian right or wrong?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Strengthen Your Argument's Logic",
+      description: "Based on gaps identified in the AI conversation, revise your argument. Address weak evidence, strengthen logical connections, anticipate and respond to counterarguments, and ensure your reasoning can withstand skeptical scrutiny.",
+      criteria: [
+        "Evidence explicitly connected to claims",
+        "Logical gaps addressed",
+        "Counterarguments acknowledged and addressed"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "Initial claim evaluation notes (BEFORE AI)",
+        "Chat transcript showing claim pressure-testing",
+        "Final analysis with strengthened reasoning"
+      ],
+      reflection: "What logical gap or weak evidence did you identify through the AI conversation? How did you address it?"
+    }
+  },
+  {
+    id: 4,
+    title: "Causation",
+    standards: "C3: D2.His.14-15, AP Reasoning Process",
+    icon: TrendingUp,
+    description: "Students analyze cause and consequence, distinguishing immediate from long-term causes and recognizing that historical events have multiple causes.",
+    humanLift: [
+      { step: "Identify the Event or Process", detail: "Clearly define what you are trying to explain—be specific about time and place." },
+      { step: "Brainstorm Potential Causes", detail: "Generate a list of factors that may have contributed to the event." },
+      { step: "Categorize Causes", detail: "Distinguish long-term, intermediate, and short-term causes; structural vs. individual factors." },
+      { step: "Analyze Causal Weight", detail: "Determine which causes were most significant and why." },
+      { step: "Consider Consequences", detail: "Examine both intended and unintended results, short and long-term." },
+      { step: "Map Causal Relationships", detail: "Create a causal map or chain showing how factors connect." }
+    ],
+    aiExtension: {
+      role: "Causation Analyst",
+      description: "AI challenges causal reasoning and surfaces overlooked factors—but does not explain causes for the student.",
+      upholdRigor: {
+        socratic: [
+          { move: "Push for more specific causal mechanisms", prompt: "Ask me about the specific mechanisms connecting my identified causes to the event." },
+          { move: "Probe causal chain logic", prompt: "Ask me questions about each step in my causal chain. How does one factor lead to the next?" },
+          { move: "Question temporal relationships", prompt: "Ask me about the timing of my causes. Which came first and how do I know the sequence?" }
+        ],
+        resistance: [
+          { move: "Challenge causal weight assignments", prompt: "Here are the causes I identified. Ask me questions that help me determine which were most significant and why." },
+          { move: "Push back on causal claims", prompt: "I say X caused Y. Challenge this—could it be correlation rather than causation?" },
+          { move: "Question necessity and sufficiency", prompt: "Was this cause necessary for the outcome? Sufficient? Push me to be more precise." }
+        ],
+        complexity: [
+          { move: "Probe for overlooked consequences", prompt: "Here are the consequences I identified. Ask me questions about unintended or long-term effects I might have missed." },
+          { move: "Introduce structural vs. contingent factors", prompt: "Ask me about whether my causes were structural (inevitable) or contingent (dependent on specific circumstances)." },
+          { move: "Layer multiple causal timeframes", prompt: "Ask me about long-term, medium-term, and immediate causes. Am I considering all timeframes?" }
+        ],
+        mirroring: [
+          { move: "Surface assumptions about causation", prompt: "I think X caused Y. Ask me questions that challenge my causal reasoning—what am I assuming?" },
+          { move: "Reflect back causal argument", prompt: "Summarize my causal analysis. Does my chain of reasoning sound logical when you say it back?" },
+          { move: "Articulate cause-effect mechanisms", prompt: "How exactly does my cause produce my effect? Help me see the mechanism I'm claiming." }
+        ],
+        simulation: [
+          { move: "Test causation with counterfactuals", prompt: "If this cause hadn't happened, would the effect still have occurred? Help me test my causal claim." },
+          { move: "Project causal patterns to other cases", prompt: "Would my causal analysis apply to similar events? Help me check if my reasoning generalizes." },
+          { move: "Model alternative causal pathways", prompt: "Could the same effect have resulted from different causes? Help me consider multiple pathways." }
+        ],
+        information: [
+          { move: "Clarify types of causation", prompt: "What types of historical causes do historians distinguish (structural, contingent, proximate, ultimate)? Help me categorize." },
+          { move: "Explain causal reasoning frameworks", prompt: "What frameworks do historians use to analyze causation? Describe without applying them for me." },
+          { move: "Identify historiographical debates about causation", prompt: "What debates exist about how to analyze historical causation? Describe different approaches." }
+        ],
+        feedback: [
+          { move: "Question missing categories of causes", prompt: "I've focused on political causes. Ask me questions about other categories I might be overlooking." },
+          { move: "Flag thin causal claims", prompt: "Where is my causal reasoning underdeveloped? Point to weak links without fixing them." },
+          { move: "Note unexamined consequences", prompt: "What consequences of this event have I not analyzed? Point to gaps." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Providing causal explanations", prompt: "What caused the French Revolution?" },
+        { move: "Ranking causes for the student", prompt: "Which cause was most important?" },
+        { move: "Explaining causal mechanisms", prompt: "How did industrialization lead to urbanization?" },
+        { move: "Identifying overlooked causes", prompt: "What causes am I missing?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Refine Your Causal Analysis",
+      description: "Based on the AI conversation, revise your causal analysis. Add missing categories of causes, adjust causal weights with justification, trace causal mechanisms more precisely, and ensure your analysis acknowledges complexity rather than oversimplifying.",
+      criteria: [
+        "Multiple categories of causes included",
+        "Causal weights justified with evidence",
+        "Causal mechanisms explicitly traced",
+        "Complexity acknowledged"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "Initial causal brainstorm and categories (BEFORE AI)",
+        "Chat transcript showing causal reasoning development",
+        "Final causal map or essay with refined analysis"
+      ],
+      reflection: "What cause or consequence did you initially overlook or underweight? How did the AI conversation shift your thinking?"
+    }
+  },
+  {
+    id: 5,
+    title: "Comparison",
+    standards: "C3: D2.His.12-13, AP Reasoning Process",
+    icon: Grid3X3,
+    description: "Students identify and analyze similarities and differences between historical events, developments, or processes across time and place.",
+    humanLift: [
+      { step: "Select Appropriate Comparisons", detail: "Choose cases that are meaningfully comparable—similar enough to compare, different enough to be interesting." },
+      { step: "Identify Categories for Comparison", detail: "Determine what aspects you will compare (political, economic, social, cultural)." },
+      { step: "Gather Evidence for Each Case", detail: "Research specific details about each case being compared." },
+      { step: "Analyze Similarities", detail: "Identify what is similar and consider why those similarities exist." },
+      { step: "Analyze Differences", detail: "Identify what is different and consider what accounts for those differences." },
+      { step: "Draw Conclusions", detail: "Make claims about what the comparison reveals about broader patterns or processes." }
+    ],
+    aiExtension: {
+      role: "Comparison Coach",
+      description: "AI challenges superficial comparisons and pushes for deeper analysis—but does not make comparisons for the student.",
+      upholdRigor: {
+        socratic: [
+          { move: "Question category choices", prompt: "I'm comparing using these categories. Ask me questions about what other categories might reveal important insights." },
+          { move: "Push for explanatory claims about patterns", prompt: "Based on my comparison, ask me questions that help me explain WHY these similarities and differences exist." },
+          { move: "Probe case selection rationale", prompt: "Ask me questions about why I chose these particular cases to compare. What makes them comparable?" }
+        ],
+        resistance: [
+          { move: "Challenge superficial similarities", prompt: "Here are the similarities I found. Ask me questions that help me determine if they are superficial or significant." },
+          { move: "Push back on false equivalences", prompt: "I'm treating these cases as equivalent. Challenge me—am I overlooking important differences?" },
+          { move: "Question generalization scope", prompt: "I'm drawing conclusions from this comparison. Push back—am I generalizing too broadly?" }
+        ],
+        complexity: [
+          { move: "Probe for meaningful differences", prompt: "I found many similarities. Ask me questions that help me look for meaningful differences I might have missed." },
+          { move: "Introduce additional comparison dimensions", prompt: "What other dimensions of comparison might reveal different insights? Ask me about aspects I haven't considered." },
+          { move: "Layer temporal and geographic factors", prompt: "Ask me how time period and location might account for the patterns I'm seeing." }
+        ],
+        mirroring: [
+          { move: "Reflect back comparison structure", prompt: "Summarize my comparison. Does my analysis of similarities and differences sound balanced?" },
+          { move: "Surface implicit comparison criteria", prompt: "What criteria am I using to judge similarity and difference? Help me see my own standards." },
+          { move: "Articulate explanatory claims", prompt: "What am I really claiming about why these patterns exist? Help me see my own argument." }
+        ],
+        simulation: [
+          { move: "Test comparison against additional cases", prompt: "Would my comparison hold if I added a third case? Help me check its robustness." },
+          { move: "Project comparison to other contexts", prompt: "Would similar patterns appear in different time periods or regions? Help me test my claims." },
+          { move: "Model alternative explanations", prompt: "What other explanations might account for the patterns I found? Help me consider alternatives." }
+        ],
+        information: [
+          { move: "Clarify types of historical comparison", prompt: "What types of historical comparisons exist (cross-regional, cross-temporal, case study)? Help me categorize mine." },
+          { move: "Explain comparative method", prompt: "How do historians approach comparative analysis? Describe the method without doing it for me." },
+          { move: "Identify comparative frameworks", prompt: "What frameworks exist for structuring historical comparisons? List them without applying them." }
+        ],
+        feedback: [
+          { move: "Surface overlooked points of comparison", prompt: "Ask me questions about aspects of this comparison I haven't considered yet." },
+          { move: "Flag imbalanced analysis", prompt: "Am I analyzing one case more thoroughly than the other? Point to imbalances." },
+          { move: "Note unexplained patterns", prompt: "Where have I identified similarities or differences without explaining them? Point to gaps." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Identifying similarities or differences", prompt: "What are the similarities between these two revolutions?" },
+        { move: "Providing evidence for comparisons", prompt: "Give me examples of how these two events were similar." },
+        { move: "Making the comparative argument", prompt: "Compare the American and French Revolutions for me." },
+        { move: "Telling student which comparison is most significant", prompt: "Which difference is most important?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Deepen Your Comparative Analysis",
+      description: "Based on the AI conversation, revise your comparison. Move beyond superficial similarities and differences to explain why they exist, what they reveal about broader patterns, and what conclusions can be drawn from the comparison.",
+      criteria: [
+        "Similarities and differences are substantive, not superficial",
+        "Explanations for patterns provided",
+        "Comparative thesis makes a meaningful claim"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "Comparison chart or Venn diagram (BEFORE AI)",
+        "Chat transcript showing comparative analysis development",
+        "Final essay with nuanced comparative thesis"
+      ],
+      reflection: "What similarity or difference did you revise or add after the AI conversation? What made it more meaningful than your original analysis?"
+    }
+  },
+  {
+    id: 6,
+    title: "Continuity & Change Over Time",
+    standards: "C3: D2.His.2-3, AP Reasoning Process",
+    icon: RotateCw,
+    description: "Students analyze what changed and what stayed the same over a defined period, assessing the significance of historical developments.",
+    humanLift: [
+      { step: "Define the Time Period", detail: "Establish clear start and end points for analysis with justification." },
+      { step: "Identify What Changed", detail: "List specific developments that represent breaks from previous patterns." },
+      { step: "Identify What Stayed the Same", detail: "List patterns, structures, or practices that persisted despite other changes." },
+      { step: "Assess Significance", detail: "Determine which changes and continuities were most historically significant." },
+      { step: "Explain Patterns", detail: "Account for why certain things changed while others remained constant." },
+      { step: "Consider Perspective", detail: "Recognize that what counts as change or continuity may depend on whose experience you examine." }
+    ],
+    aiExtension: {
+      role: "CCOT Analyst",
+      description: "AI challenges CCOT claims and surfaces overlooked patterns—but does not identify changes or continuities for the student.",
+      upholdRigor: {
+        socratic: [
+          { move: "Question significance assessments", prompt: "I think this is the most significant change. Ask me questions about why it matters more than other changes." },
+          { move: "Push for more specific periodization", prompt: "Here is my CCOT thesis. Ask me questions about turning points or periodization I should reconsider." },
+          { move: "Probe criteria for identifying change", prompt: "Ask me what criteria I'm using to decide whether something is a change or a continuity." }
+        ],
+        resistance: [
+          { move: "Challenge claims about the pace of change", prompt: "I think this change was revolutionary. Ask me questions that challenge whether it was really as sudden as I'm claiming." },
+          { move: "Push back on continuity claims", prompt: "I say this stayed the same. Challenge me—were there subtle changes I'm overlooking?" },
+          { move: "Question period boundaries", prompt: "I've defined my period this way. Push back—are my start and end points justified?" }
+        ],
+        complexity: [
+          { move: "Probe for overlooked continuities", prompt: "Here are the changes I identified. Ask me questions that help me determine what stayed the same that I might have overlooked." },
+          { move: "Introduce multiple rates of change", prompt: "Ask me about whether change happened at the same pace for all groups and in all areas." },
+          { move: "Layer different analytical categories", prompt: "I focused on political changes. Ask me about economic, social, and cultural patterns too." }
+        ],
+        mirroring: [
+          { move: "Surface whose perspective is centered", prompt: "Ask me questions that help me consider how different groups experienced change and continuity differently." },
+          { move: "Reflect back CCOT argument", prompt: "Summarize my CCOT analysis. Does my balance of change and continuity sound accurate?" },
+          { move: "Articulate significance criteria", prompt: "What makes me think this change is significant? Help me see my own criteria." }
+        ],
+        simulation: [
+          { move: "Test periodization against events", prompt: "If I moved my start or end date, how would my analysis change? Help me test my periodization." },
+          { move: "Project patterns forward", prompt: "If these patterns of change and continuity continued, what would I expect in the next period?" },
+          { move: "Model alternative periodizations", prompt: "How would other historians periodize this same era? What would they emphasize differently?" }
+        ],
+        information: [
+          { move: "Clarify CCOT concepts", prompt: "What do historians mean by continuity vs. change? Help me understand the analytical distinction." },
+          { move: "Explain periodization approaches", prompt: "How do historians decide where to draw period boundaries? Describe approaches without choosing for me." },
+          { move: "Identify CCOT frameworks", prompt: "What frameworks exist for analyzing change over time? List them without applying them." }
+        ],
+        feedback: [
+          { move: "Flag overemphasis on change", prompt: "Am I focusing too much on change and not enough on continuity? Point to imbalances." },
+          { move: "Note missing perspectives", prompt: "Whose experience of this period have I not considered? Point to gaps." },
+          { move: "Identify unexplained patterns", prompt: "Where have I identified change or continuity without explaining why? Point to gaps in analysis." }
+        ]
+      },
+      collapseRigor: [
+        { move: "Identifying changes or continuities", prompt: "What changed during this period?" },
+        { move: "Assessing significance for the student", prompt: "Which change was most significant?" },
+        { move: "Providing the CCOT analysis", prompt: "Analyze continuity and change in China from 1900-1950." },
+        { move: "Explaining why things changed", prompt: "Why did this change occur while other things stayed the same?" }
+      ]
+    },
+    returnToHuman: {
+      task: "Refine Your CCOT Analysis",
+      description: "Based on the AI conversation, revise your continuity and change analysis. Ensure you've considered multiple perspectives, assessed the significance of changes and continuities, and explained why certain things changed while others remained constant.",
+      criteria: [
+        "Both changes and continuities substantively addressed",
+        "Significance assessed with justification",
+        "Multiple perspectives considered",
+        "Explanations for patterns provided"
+      ]
+    },
+    evidence: {
+      artifacts: [
+        "CCOT chart with changes and continuities listed (BEFORE AI)",
+        "Chat transcript showing analysis refinement",
+        "Final essay with nuanced CCOT thesis"
+      ],
+      reflection: "What continuity or change did you initially miss or mischaracterize? How did the AI conversation help you see it differently?"
+    }
+  }
+];
+
+// ============================================
+// HISTORY CASE STUDIES
+// ============================================
+const historyCaseStudies = [
+  {
+    id: 1,
+    title: "Sourcing the Black Death",
+    skill: "Sourcing",
+    lesson: "OER Project: Source Collection – The Black Death",
+    description: "In this lesson from OER Project's World History course, students analyze primary sources about the fourteenth-century pandemic including accounts from Ibn Battuta, Giovanni Boccaccio, and medieval physicians. Using the HAH Cycle, students first complete the Quick Sourcing Tool independently—identifying author, purpose, audience, and point of view for each source.",
+    tieredPrompts: {
+      collapseRigor: [
+        { prompt: "Is this source reliable? Tell me its biases." },
+        { prompt: "What is the purpose and audience of this document?" }
+      ],
+      neutral: [
+        { principleId: 'mirroring', prompt: "Summarize my analysis of this source's reliability. Does my reasoning sound complete when you say it back?" },
+        { principleId: 'information', prompt: "What were the typical social positions and literacy rates in 14th-century Florence? Give me context without interpreting my source." },
+        { principleId: 'feedback', prompt: "What standard sourcing questions have I not addressed? Point them out without answering them." }
+      ],
+      upholdRigor: [
+        { principleId: 'socratic', prompt: "Ask me what evidence I have for my claims about who wrote this source and why." },
+        { principleId: 'resistance', prompt: "I identified Boccaccio as a reliable eyewitness. Challenge me—what might his perspective as a Florentine elite cause him to overlook?" },
+        { principleId: 'complexity', prompt: "What other possible purposes might this source have served that I haven't considered?" }
+      ]
+    },
+    returnToHuman: "Students return to their sources with new questions, ultimately producing richer analysis that acknowledges the limits of each source while still extracting historical value from them."
+  },
+  {
+    id: 2,
+    title: "Causation and the Industrial Revolution",
+    skill: "Causation",
+    lesson: "OER Project: Causation – Origins of the Industrial Revolution",
+    description: "OER Project's Industrial Revolution unit asks students to grapple with a deceptively simple question: Why did industrialization begin in Britain? Using the HAH Cycle, students first brainstorm potential causes independently, categorizing them as long-term (centuries of agricultural change), intermediate (colonial trade networks), and short-term (specific inventions). They create an initial causal map showing connections between factors.",
+    tieredPrompts: {
+      collapseRigor: [
+        { prompt: "What caused the Industrial Revolution?" },
+        { prompt: "Explain the connection between coal and industrialization." }
+      ],
+      neutral: [
+        { principleId: 'mirroring', prompt: "Summarize my causal map. What factors am I emphasizing and which am I downplaying?" },
+        { principleId: 'information', prompt: "What were Britain's coal reserves compared to other European nations? Give me the data without drawing conclusions." },
+        { principleId: 'feedback', prompt: "Where is my causal reasoning underdeveloped? Point to weak links without fixing them." }
+      ],
+      upholdRigor: [
+        { principleId: 'socratic', prompt: "Ask me about the specific mechanisms connecting my identified causes to industrialization. How does one factor lead to the next?" },
+        { principleId: 'resistance', prompt: "I ranked coal availability as more significant than colonial trade networks. Challenge my causal weighting—how do I know which was more important?" },
+        { principleId: 'complexity', prompt: "What structural vs. contingent factors am I considering? Could industrialization have happened differently?" },
+        { principleId: 'simulation', prompt: "If coal hadn't been available in Britain, would industrialization still have occurred? Help me test my causal claims." }
+      ]
+    },
+    returnToHuman: "Students revise their causal maps based on these challenges, producing more sophisticated multi-causal explanations that trace mechanisms and acknowledge complexity."
+  },
+  {
+    id: 3,
+    title: "Comparing Atlantic Revolutions",
+    skill: "Comparison",
+    lesson: "OER Project: The Atlantic Revolutions",
+    description: "In studying the wave of revolutions from 1775-1825, OER Project asks students to compare the American, French, and Haitian Revolutions. The HAH Cycle begins with students independently completing a comparison chart, identifying similarities and differences across categories: causes, key actors, ideologies, outcomes, and lasting impacts. Students note their initial thesis about what the comparison reveals.",
+    tieredPrompts: {
+      collapseRigor: [
+        { prompt: "What are the similarities and differences between the American and French Revolutions?" },
+        { prompt: "Write a thesis comparing the Atlantic Revolutions." }
+      ],
+      neutral: [
+        { principleId: 'mirroring', prompt: "Summarize my comparison. Does my analysis of similarities and differences sound balanced?" },
+        { principleId: 'information', prompt: "What were the formal declarations or founding documents of each revolution? List them without analysis." },
+        { principleId: 'feedback', prompt: "Where have I identified patterns without explaining them? Point to gaps in my analysis." }
+      ],
+      upholdRigor: [
+        { principleId: 'socratic', prompt: "Ask me why I chose these particular categories for comparison. What other categories might reveal important insights?" },
+        { principleId: 'resistance', prompt: "I found that all three revolutions were inspired by Enlightenment ideals. Challenge me—is this similarity superficial or significant?" },
+        { principleId: 'complexity', prompt: "How were Enlightenment ideals interpreted differently by enslaved Haitians versus American slaveholders? Push me to see meaningful differences." }
+      ]
+    },
+    returnToHuman: "Students return to refine their comparative thesis, moving beyond surface similarities to explain meaningful patterns and variations across the Atlantic revolutionary moment."
+  },
+  {
+    id: 4,
+    title: "Contextualizing the Mongol Empire",
+    skill: "Contextualization",
+    lesson: "OER Project: Source Collection – Mongol Empire",
+    description: "OER Project's unit on the Mongol Empire requires students to contextualize primary sources from across Afro-Eurasia. Before engaging with AI, students work independently to establish both broad context (Eurasian trade networks, nomadic pastoral societies, technological developments) and narrow context (specific circumstances of Mongol expansion, the reign of Genghis Khan). They categorize their context notes and identify causal links between context and events.",
+    tieredPrompts: {
+      collapseRigor: [
+        { prompt: "What was the historical context of the Mongol Empire?" },
+        { prompt: "Explain why the Mongols were able to conquer so much territory." }
+      ],
+      neutral: [
+        { principleId: 'mirroring', prompt: "Summarize my contextual analysis. Does my reasoning about background factors sound complete?" },
+        { principleId: 'information', prompt: "What were the major trade routes crossing Central Asia before the Mongol conquests? Give me geographic information without interpretation." },
+        { principleId: 'feedback', prompt: "Am I balancing broad and narrow context appropriately? Point to imbalances without correcting them." }
+      ],
+      upholdRigor: [
+        { principleId: 'socratic', prompt: "Ask me about how location and geography shaped Mongol expansion. What geographic factors am I considering?" },
+        { principleId: 'resistance', prompt: "I've balanced broad and narrow context. Challenge me—am I overgeneralizing about nomadic societies?" },
+        { principleId: 'complexity', prompt: "Ask me how this event looks different at local, regional, and global scales. Am I considering all scales?" },
+        { principleId: 'simulation', prompt: "How would people living in this context have understood their situation? Help me think through their worldview." }
+      ]
+    },
+    returnToHuman: "Students revise their contextualization, producing analysis that situates Mongol expansion within multiple overlapping contexts while avoiding anachronistic assumptions."
+  },
+  {
+    id: 5,
+    title: "CCOT: Networks of Exchange 1200-1450",
+    skill: "Continuity & Change Over Time",
+    lesson: "OER Project: Networks of Exchange Unit",
+    description: "OER Project's unit on Networks of Exchange (1200-1450 CE) culminates in students analyzing what changed and what stayed the same in Afro-Eurasian trade networks. Using the HAH Cycle, students first complete a CCOT chart independently—listing changes (expansion of Mongol trade routes, spread of the Black Death, new maritime technologies) and continuities (persistence of Silk Road patterns, continued importance of luxury goods, ongoing role of merchant diasporas). They draft an initial thesis assessing significance.",
+    tieredPrompts: {
+      collapseRigor: [
+        { prompt: "What changed and what stayed the same in trade networks from 1200-1450?" },
+        { prompt: "Write a CCOT thesis about the Silk Road." }
+      ],
+      neutral: [
+        { principleId: 'mirroring', prompt: "Whose experience of this period am I centering? Help me see what perspectives I'm privileging." },
+        { principleId: 'information', prompt: "What were the major goods traded along the Silk Road during this period? List commodities without analyzing significance." },
+        { principleId: 'feedback', prompt: "Am I focusing too much on change and not enough on continuity? Point to imbalances." }
+      ],
+      upholdRigor: [
+        { principleId: 'socratic', prompt: "Ask me what criteria I'm using to decide whether something is a change or a continuity." },
+        { principleId: 'resistance', prompt: "I argue the Black Death represents the most significant change. Challenge this—how quickly did trade recover?" },
+        { principleId: 'complexity', prompt: "Ask me about whether change happened at the same pace for all groups and in all areas." }
+      ]
+    },
+    returnToHuman: "Students revise their analysis to acknowledge that what appears as dramatic change from one perspective may look like continuity from another, producing more nuanced CCOT essays."
+  }
+];
+
+// ============================================
+// HISTORY FRAMEWORK COMPONENT
+// ============================================
+function HistoryFramework({ onBack }) {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [expandedSkill, setExpandedSkill] = useState(null);
+  const [expandAll, setExpandAll] = useState(false);
+  const [expandedModelParts, setExpandedModelParts] = useState({ part1: true, part2: true, part3: true });
+
+  // Lesson Designer State
+  const [selectedSkillId, setSelectedSkillId] = useState('');
+  const [lessonInputs, setLessonInputs] = useState({ lessonContext: '' });
+  const [selectedMoves, setSelectedMoves] = useState([]);
+  const [expandedPrinciples, setExpandedPrinciples] = useState({});
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedOutputs, setGeneratedOutputs] = useState(null);
+
+  const selectedSkill = historySkillsData.find(s => s.id === parseInt(selectedSkillId));
+
+  const toggleModelPart = (part) => {
+    setExpandedModelParts(prev => ({ ...prev, [part]: !prev[part] }));
+  };
+
+  const handleExpandAll = () => {
+    if (expandAll) setExpandedSkill(null);
+    setExpandAll(!expandAll);
+  };
+
+  const handleSkillChange = (e) => {
+    setSelectedSkillId(e.target.value);
+    setSelectedMoves([]);
+    setExpandedPrinciples({});
+    setGeneratedOutputs(null);
+  };
+
+  const handleInputChange = (field, value) => {
+    setLessonInputs(prev => ({ ...prev, [field]: value }));
+  };
+
+  const togglePrincipleExpanded = (principleId) => {
+    setExpandedPrinciples(prev => ({ ...prev, [principleId]: !prev[principleId] }));
+  };
+
+  const handleMoveToggle = (moveKey) => {
+    setSelectedMoves(prev =>
+      prev.includes(moveKey) ? prev.filter(k => k !== moveKey) : [...prev, moveKey]
+    );
+  };
+
+  const getMovesForSkill = (skill) => {
+    if (!skill) return { neutral: {}, uphold: {} };
+    const neutral = {};
+    const uphold = {};
+    Object.entries(skill.aiExtension.upholdRigor).forEach(([principleId, principleMoves]) => {
+      const principle = aiExtensionPrinciples.find(p => p.id === principleId);
+      if (!principle) return;
+      const movesWithMeta = principleMoves.map((move, idx) => ({
+        ...move,
+        principleId,
+        principleName: principle.name,
+        uniqueKey: `${principleId}-${idx}`
+      }));
+      if (principle.tier === 'neutral') {
+        neutral[principleId] = movesWithMeta;
+      } else if (principle.tier === 'uphold') {
+        uphold[principleId] = movesWithMeta;
+      }
+    });
+    return { neutral, uphold };
+  };
+
+  const { neutral: neutralMoves, uphold: upholdMoves } = getMovesForSkill(selectedSkill);
+
+  const renderPrincipleDropdown = (principleId, moves, tierColor) => {
+    const principle = aiExtensionPrinciples.find(p => p.id === principleId);
+    if (!principle || moves.length === 0) return null;
+    const Icon = principle.icon;
+    const isExpanded = expandedPrinciples[principleId];
+    const selectedCount = moves.filter(m => selectedMoves.includes(m.uniqueKey)).length;
+
+    const colorStyles = {
+      amber: { bg: '#fef3c7', border: '#fbbf24', iconColor: '#d97706' },
+      green: { bg: '#d1fae5', border: '#10b981', iconColor: '#059669' }
+    };
+    const styles = colorStyles[tierColor] || colorStyles.green;
+
+    return (
+      <div key={principleId} className="principle-dropdown" style={{ border: `1px solid ${styles.border}`, borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '0.5rem' }}>
+        <button
+          onClick={() => togglePrincipleExpanded(principleId)}
+          style={{ width: '100%', padding: '0.875rem 1rem', background: styles.bg, display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: 'none', cursor: 'pointer' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Icon size={20} style={{ color: styles.iconColor }} />
+            <span style={{ fontWeight: 600, color: 'var(--color-text)' }}>{principle.name}</span>
+            {selectedCount > 0 && (
+              <span style={{ marginLeft: '0.5rem', padding: '0.2rem 0.5rem', background: 'rgba(0,0,0,0.1)', fontSize: '0.7rem', borderRadius: '999px', fontWeight: 600 }}>
+                {selectedCount} selected
+              </span>
+            )}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{moves.length} moves</span>
+            {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+          </div>
+        </button>
+        {isExpanded && (
+          <div style={{ padding: '1rem', background: 'var(--color-surface)', borderTop: '1px solid var(--color-border-subtle)' }}>
+            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.75rem' }}>{principle.definition}</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {moves.map(move => (
+                <label key={move.uniqueKey} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: `1px solid ${selectedMoves.includes(move.uniqueKey) ? styles.border : 'var(--color-border)'}`, background: selectedMoves.includes(move.uniqueKey) ? styles.bg : 'var(--color-bg)', cursor: 'pointer' }}>
+                  <input type="checkbox" checked={selectedMoves.includes(move.uniqueKey)} onChange={() => handleMoveToggle(move.uniqueKey)} style={{ marginTop: '0.2rem' }} />
+                  <div>
+                    <p style={{ fontWeight: 500, color: 'var(--color-text)', fontSize: '0.9rem' }}>{move.move}</p>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', fontStyle: 'italic', marginTop: '0.25rem' }}>{move.prompt}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // History-specific PrincipleDropdown component
+  const HistoryPrincipleDropdown = ({ principle, moves, tierColor = 'green' }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const Icon = principle.icon;
+
+    const colorMap = {
+      green: '#059669',
+      amber: '#d97706',
+      red: '#dc2626'
+    };
+    const iconColor = colorMap[tierColor] || colorMap.green;
+
+    return (
+      <div className="framework-principle-dropdown">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="framework-principle-header"
+        >
+          <div className="framework-principle-left">
+            <Icon size={16} className="principle-icon" style={{ color: iconColor }} />
+            <span className="principle-label">{principle.name}</span>
+            <span className="moves-count">({moves.length} {moves.length === 1 ? 'move' : 'moves'})</span>
+          </div>
+          {isOpen ? <ChevronDown size={16} style={{ color: '#9ca3af' }} /> : <ChevronRight size={16} style={{ color: '#9ca3af' }} />}
+        </button>
+
+        {isOpen && (
+          <div className="framework-principle-content">
+            {moves.map((item, idx) => (
+              <div key={idx} className="framework-move-item">
+                <p className="move-name">{item.move}</p>
+                <p className="move-prompt">{item.prompt}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderSkillCard = (skill) => {
+    const isExpanded = expandAll || expandedSkill === skill.id;
+    const IconComponent = skill.icon;
+
+    return (
+      <div key={skill.id} className="skill-card">
+        <button onClick={() => !expandAll && setExpandedSkill(isExpanded ? null : skill.id)} className="skill-card-header">
+          <div className="skill-card-left">
+            <div className="skill-icon">
+              <IconComponent size={24} />
+            </div>
+            <div>
+              <h3 className="skill-title">{skill.title}</h3>
+              <p className="skill-standards">{skill.standards}</p>
+            </div>
+          </div>
+          {isExpanded ? <ChevronUp className="chevron" /> : <ChevronDown className="chevron" />}
+        </button>
+
+        {isExpanded && (
+          <div className="skill-card-content">
+            <p className="skill-description">{skill.description}</p>
+
+            <div className="skill-grid">
+              {/* 1. Human Lift */}
+              <div className="skill-section">
+                <h4 className="skill-section-title">
+                  <span className="section-number human">1</span>
+                  Human Lift (Before AI)
+                </h4>
+                <p className="section-subtitle">Students must complete independently</p>
+                <ul className="human-lift-list">
+                  {skill.humanLift.map((item, idx) => (
+                    <li key={idx}>
+                      <span className="step-name">{idx + 1}. {item.step}:</span> {item.detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* 2. AI Usage Taxonomy */}
+              <div className="skill-section">
+                <h4 className="skill-section-title">
+                  <span className="section-number ai">2</span>
+                  AI Usage Taxonomy: {skill.aiExtension.role}
+                </h4>
+                <p className="ai-description">{skill.aiExtension.description}</p>
+
+                {/* Collapse Rigor */}
+                <div className="taxonomy-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot collapse"></span>
+                    <span className="tier-name collapse">Collapse Rigor</span>
+                    <span className="tier-subtitle">— AI performs the cognitive work</span>
+                  </div>
+                  <div className="tier-principles">
+                    <HistoryPrincipleDropdown
+                      principle={{ id: 'taskCompletion', name: 'Task Completion', icon: XCircle }}
+                      moves={skill.aiExtension.collapseRigor}
+                      tierColor="red"
+                    />
+                  </div>
+                </div>
+
+                {/* Neutral */}
+                <div className="taxonomy-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot neutral"></span>
+                    <span className="tier-name neutral">Neutral</span>
+                    <span className="tier-subtitle">— AI provides; students decide how to engage</span>
+                  </div>
+                  <div className="tier-principles">
+                    {aiExtensionPrinciples.filter(p => p.tier === 'neutral').map(principle => {
+                      const moves = skill.aiExtension.upholdRigor[principle.id];
+                      if (!moves || moves.length === 0) return null;
+                      return <HistoryPrincipleDropdown key={principle.id} principle={principle} moves={moves} tierColor="amber" />;
+                    })}
+                  </div>
+                </div>
+
+                {/* Uphold Rigor */}
+                <div className="taxonomy-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot uphold"></span>
+                    <span className="tier-name uphold">Uphold Rigor</span>
+                    <span className="tier-subtitle">— AI creates conditions requiring student thinking</span>
+                  </div>
+                  <div className="tier-principles">
+                    {aiExtensionPrinciples.filter(p => p.tier === 'uphold').map(principle => {
+                      const moves = skill.aiExtension.upholdRigor[principle.id];
+                      if (!moves || moves.length === 0) return null;
+                      return <HistoryPrincipleDropdown key={principle.id} principle={principle} moves={moves} tierColor="green" />;
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Return to Human */}
+              <div className="skill-section">
+                <h4 className="skill-section-title">
+                  <span className="section-number return">3</span>
+                  Return to Human: {skill.returnToHuman.task}
+                </h4>
+                <p className="return-description">{skill.returnToHuman.description}</p>
+
+                <p className="criteria-label">Success Criteria</p>
+                <ul className="criteria-list">
+                  {skill.returnToHuman.criteria.map((item, idx) => (
+                    <li key={idx}>
+                      <CheckCircle size={14} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* 4. Evidence of Thinking */}
+              <div className="skill-section">
+                <h4 className="skill-section-title">
+                  <span className="section-number evidence">4</span>
+                  Evidence of Thinking
+                </h4>
+                <div style={{ marginBottom: '1rem' }}>
+                  <p className="criteria-label" style={{ color: '#6b7280' }}>Artifacts to Collect</p>
+                  <ul className="criteria-list">
+                    {skill.evidence.artifacts.map((item, idx) => (
+                      <li key={idx}>
+                        <CheckCircle size={14} style={{ color: '#6b7280' }} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="criteria-label" style={{ color: '#6b7280' }}>Reflection Prompt</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', background: 'var(--color-bg)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border)', fontStyle: 'italic' }}>
+                    "{skill.evidence.reflection}"
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // History Case Study Card component
+  const HistoryCaseStudyCard = ({ study }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+      <div className="case-study-card">
+        <button onClick={() => setIsExpanded(!isExpanded)} className="case-study-header">
+          <div className="case-study-left">
+            <span className="case-study-skill">{study.skill}</span>
+            <h3 className="case-study-title">{study.title}</h3>
+            <p className="case-study-lesson">{study.lesson}</p>
+          </div>
+          {isExpanded ? <ChevronUp className="chevron" /> : <ChevronDown className="chevron" />}
+        </button>
+
+        {isExpanded && (
+          <div className="case-study-content">
+            <p className="case-study-description">{study.description}</p>
+
+            {study.tieredPrompts && (
+              <div className="tiered-prompts">
+                {/* Collapse Rigor */}
+                <div className="prompt-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot collapse"></span>
+                    <span className="tier-name collapse">Collapse Rigor — What to Avoid</span>
+                  </div>
+                  <div className="prompt-list">
+                    {study.tieredPrompts.collapseRigor.map((item, idx) => (
+                      <div key={idx} className="prompt-item collapse">
+                        <p className="prompt-text">"{item.prompt}"</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Neutral */}
+                <div className="prompt-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot neutral"></span>
+                    <span className="tier-name neutral">Neutral — AI Provides, Student Decides</span>
+                  </div>
+                  <div className="prompt-list">
+                    {study.tieredPrompts.neutral.map((item, idx) => {
+                      const principle = aiExtensionPrinciples.find(p => p.id === item.principleId);
+                      const PrincipleIcon = principle?.icon || HelpCircle;
+                      return (
+                        <div key={idx} className="prompt-item neutral">
+                          <div className="prompt-principle">
+                            <PrincipleIcon size={14} />
+                            <span>{principle?.name}</span>
+                          </div>
+                          <p className="prompt-text">"{item.prompt}"</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Uphold Rigor */}
+                <div className="prompt-tier">
+                  <div className="tier-title">
+                    <span className="tier-dot uphold"></span>
+                    <span className="tier-name uphold">Uphold Rigor — AI Creates Thinking Conditions</span>
+                  </div>
+                  <div className="prompt-list">
+                    {study.tieredPrompts.upholdRigor.map((item, idx) => {
+                      const principle = aiExtensionPrinciples.find(p => p.id === item.principleId);
+                      const PrincipleIcon = principle?.icon || HelpCircle;
+                      return (
+                        <div key={idx} className="prompt-item uphold">
+                          <div className="prompt-principle">
+                            <PrincipleIcon size={14} />
+                            <span>{principle?.name}</span>
+                          </div>
+                          <p className="prompt-text">"{item.prompt}"</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {study.returnToHuman && (
+              <div className="return-to-human-box">
+                <h4>Return to Human</h4>
+                <p>{study.returnToHuman}</p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="app-container">
+      {/* Header */}
+      <header className="app-header">
+        <div className="header-content">
+          <div className="header-top-row">
+            <button onClick={onBack} className="home-btn">
+              <Home size={16} />
+              <span>Home</span>
+            </button>
+          </div>
+          <h1 className="header-title">AI-Enhanced History Skills Framework: A Research Preview</h1>
+          <p className="header-subtitle">Integrating Generative AI into Secondary History & Social Studies Instruction</p>
+        </div>
+
+        {/* Navigation */}
+        <nav className="nav-tabs">
+          {['overview', 'framework', 'casestudies', 'designer'].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`nav-tab ${activeTab === tab ? 'active' : ''}`}
+            >
+              {tab === 'overview' && 'Overview'}
+              {tab === 'framework' && 'Human-AI-Human in History'}
+              {tab === 'casestudies' && 'Case Studies'}
+              {tab === 'designer' && 'Apply To Your Content'}
+            </button>
+          ))}
+        </nav>
+      </header>
+
+      <main className="main-content">
+        {activeTab === 'overview' && (
+          <div className="overview-page">
+            {/* Intro text */}
+            <p className="overview-intro-text">
+              This framework is grounded in historical thinking skills and the interconnected nature of sourcing, contextualization, and argumentation. While these skills are inseparable in authentic historical work, we name specific behaviors to help curriculum developers and teachers intentionally integrate AI literacy into existing content and build students' autonomy and fluency to use AI to deepen their thinking.
+            </p>
+
+            {/* Model Parts */}
+            <div className="model-parts">
+              {/* Part 1 */}
+              <div className="model-part">
+                <button onClick={() => toggleModelPart('part1')} className="model-part-header part1">
+                  <div className="model-part-left">
+                    <span className="part-badge part1">Part 1</span>
+                    <h3>The Human-AI-Human Cycle</h3>
+                  </div>
+                  {expandedModelParts.part1 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+
+                {expandedModelParts.part1 && (
+                  <div className="model-part-content">
+                    <p>
+                      The HAH Cycle ensures AI enhances rather than replaces historical thinking. Students engage in substantial cognitive work before AI use, interact with AI as a <strong>thinking partner</strong> rather than an answer source, and return to human judgment for final sensemaking.
+                    </p>
+
+                    <div className="hah-cycle-grid">
+                      <div className="hah-step human-first">
+                        <div className="hah-icon">H</div>
+                        <h4>Human First</h4>
+                        <p>Students read sources, complete thinking tools, develop claims, and form initial arguments <strong>before</strong> engaging AI. This ensures they develop their own historical thinking.</p>
+                      </div>
+                      <div className="hah-step ai-partner">
+                        <div className="hah-icon">AI</div>
+                        <h4>AI as Thinking Partner</h4>
+                        <p>AI creates conditions for deeper thinking through strategic questioning, productive resistance, and targeted feedback. AI <strong>never</strong> provides historical analysis or answers.</p>
+                      </div>
+                      <div className="hah-step human-final">
+                        <div className="hah-icon">H</div>
+                        <h4>Human Final</h4>
+                        <p>Students revise their thinking based on the AI conversation and exercise <strong>historical judgment</strong>. They decide which challenges to address and how.</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Part 2 */}
+              <div className="model-part">
+                <button onClick={() => toggleModelPart('part2')} className="model-part-header part2">
+                  <div className="model-part-left">
+                    <span className="part-badge part2">Part 2</span>
+                    <h3>The AI Usage Taxonomy</h3>
+                  </div>
+                  {expandedModelParts.part2 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+
+                {expandedModelParts.part2 && (
+                  <div className="model-part-content">
+                    <p>
+                      Not all AI use is created equal. This taxonomy classifies AI interactions by their impact on student cognitive engagement—from uses that collapse rigor to those that actively uphold it.
+                    </p>
+
+                    {/* Collapse Rigor Tier */}
+                    <div className="taxonomy-tier" style={{ marginTop: '1.5rem' }}>
+                      <div className="tier-header" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#dc2626' }}></span>
+                        <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '1.1rem' }}>Collapse Rigor</h4>
+                      </div>
+                      <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem' }}>
+                        AI performs the cognitive work; students receive output.
+                      </p>
+                      <div style={{ background: 'var(--color-bg)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-md)', padding: '1rem' }}>
+                        <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>
+                          Examples: AI evaluates sources, AI provides historical context, AI constructs arguments, AI identifies counterevidence. The student's role is reduced to prompting and accepting output.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Neutral Tier */}
+                    <div className="taxonomy-tier" style={{ marginTop: '1.5rem' }}>
+                      <div className="tier-header" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#d97706' }}></span>
+                        <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '1.1rem' }}>Neutral</h4>
+                      </div>
+                      <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem' }}>
+                        AI provides something useful; students decide whether and how to engage.
+                      </p>
+                      <div className="hah-cycle-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                        {aiExtensionPrinciples.filter(p => p.tier === 'neutral').map((principle) => {
+                          const Icon = principle.icon;
+                          return (
+                            <div key={principle.id} className="hah-step" style={{ padding: '1rem' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                                <Icon size={18} style={{ color: '#d97706' }} />
+                                <h4 style={{ fontSize: '0.95rem', margin: 0 }}>{principle.name}</h4>
+                              </div>
+                              <p style={{ fontSize: '0.85rem', margin: 0 }}>{principle.definition}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Uphold Rigor Tier */}
+                    <div className="taxonomy-tier" style={{ marginTop: '1.5rem' }}>
+                      <div className="tier-header" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#059669' }}></span>
+                        <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '1.1rem' }}>Uphold Rigor</h4>
+                      </div>
+                      <p style={{ color: 'var(--color-text-secondary)', marginBottom: '0.75rem' }}>
+                        AI creates conditions that require student thinking; students must think to respond.
+                      </p>
+                      <div className="hah-cycle-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+                        {aiExtensionPrinciples.filter(p => p.tier === 'uphold').map((principle) => {
+                          const Icon = principle.icon;
+                          return (
+                            <div key={principle.id} className="hah-step" style={{ padding: '1rem' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                                <Icon size={18} style={{ color: '#059669' }} />
+                                <h4 style={{ fontSize: '0.95rem', margin: 0 }}>{principle.name}</h4>
+                              </div>
+                              <p style={{ fontSize: '0.85rem', margin: 0 }}>{principle.definition}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Part 3 */}
+              <div className="model-part">
+                <button onClick={() => toggleModelPart('part3')} className="model-part-header part3">
+                  <div className="model-part-left">
+                    <span className="part-badge part3">Part 3</span>
+                    <h3>A New Approach to Assessment</h3>
+                  </div>
+                  {expandedModelParts.part3 ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+
+                {expandedModelParts.part3 && (
+                  <div className="model-part-content">
+                    <p>
+                      The HAH Cycle isn't complete until students demonstrate how they evaluated and integrated (or rejected) AI contributions. This means documenting the evolution of their thinking—from initial claims through AI-challenged reasoning to final arguments.
+                    </p>
+                    <p style={{ marginTop: '1rem' }}>
+                      The framework specifies what artifacts to collect for each skill. Two artifacts apply universally:
+                    </p>
+                    <div className="hah-cycle-grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)', marginTop: '1rem' }}>
+                      <div className="hah-step">
+                        <h4>The AI Transcript</h4>
+                        <p style={{ marginBottom: '0.75rem' }}>
+                          The most valuable artifact is the AI transcript itself—a digital record of the student's historical reasoning in dialogue with AI. This proves the student engaged in genuine historical discourse.
+                        </p>
+                        <ul className="criteria-list">
+                          <li>
+                            <CheckCircle size={16} />
+                            A shared link to the full chat conversation
+                          </li>
+                          <li>
+                            <CheckCircle size={16} />
+                            Screenshots of moments where they challenged AI or defended their interpretation
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="hah-step">
+                        <h4>The Reflection Statement</h4>
+                        <p style={{ marginBottom: '0.75rem' }}>
+                          At the end of each assignment, students answer three questions:
+                        </p>
+                        <ul className="criteria-list">
+                          <li>
+                            <CheckCircle size={16} />
+                            What question did the AI ask that made you think differently about the historical problem?
+                          </li>
+                          <li>
+                            <CheckCircle size={16} />
+                            What did you change in your argument or analysis based on that challenge?
+                          </li>
+                          <li>
+                            <CheckCircle size={16} />
+                            What AI suggestion did you reject and why?
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'framework' && (
+          <div className="framework-page">
+            <div className="framework-header">
+              <div>
+                <h2>Human-AI-Human in History</h2>
+              </div>
+              <button onClick={handleExpandAll} className="expand-all-btn">
+                {expandAll ? 'Collapse All' : 'Expand All'}
+              </button>
+            </div>
+
+            <p className="framework-intro-text">
+              The HAH cycle is designed to be iterative. Early on, students need explicit scaffolding to engage AI productively — but over time, the structure becomes internalized. As students grow more skilled at prompting and evaluating AI responses, they begin to initiate meaningful AI engagement independently. The goal is fluency: students who instinctively use AI to challenge, extend, and sharpen their thinking rather than to bypass it.
+            </p>
+
+            {historySkillsData.map(skill => renderSkillCard(skill))}
+          </div>
+        )}
+
+        {activeTab === 'casestudies' && (
+          <div className="casestudies-page">
+            <section className="casestudies-intro">
+              <h2>Applying the HAH Cycle: OER Project Case Studies</h2>
+              <p>
+                The following case studies illustrate how the Human-AI-Human Cycle applies to specific units from the <strong>OER Project curriculum</strong>. Each example demonstrates how students engage with historical sources and complete authentic historical work before using AI as a thinking partner.
+              </p>
+              <p>
+                These examples are not scripts—they are models that teachers can adapt to their own sources and contexts.
+              </p>
+            </section>
+
+            {historyCaseStudies.map(study => (
+              <HistoryCaseStudyCard key={study.id} study={study} />
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'designer' && (
+          <div className="lesson-designer">
+            <div className="progress-indicator">
+              <div className="progress-steps">
+                <div className={`progress-step ${selectedSkillId ? 'completed' : 'active'}`}>
+                  <div className="progress-step-number">1</div>
+                  <div className="progress-step-label">Skill</div>
+                </div>
+                <div className="progress-line"><div className={`progress-line-fill ${selectedSkillId ? 'filled' : ''}`}></div></div>
+                <div className={`progress-step ${lessonInputs.lessonContext ? 'completed' : selectedSkillId ? 'active' : ''}`}>
+                  <div className="progress-step-number">2</div>
+                  <div className="progress-step-label">Context</div>
+                </div>
+                <div className="progress-line"><div className={`progress-line-fill ${lessonInputs.lessonContext ? 'filled' : ''}`}></div></div>
+                <div className={`progress-step ${selectedMoves.length > 0 ? 'completed' : lessonInputs.lessonContext ? 'active' : ''}`}>
+                  <div className="progress-step-number">3</div>
+                  <div className="progress-step-label">AI Moves</div>
+                </div>
+                <div className="progress-line"><div className={`progress-line-fill ${selectedMoves.length > 0 ? 'filled' : ''}`}></div></div>
+                <div className={`progress-step ${generatedOutputs ? 'completed' : selectedMoves.length > 0 ? 'active' : ''}`}>
+                  <div className="progress-step-number">4</div>
+                  <div className="progress-step-label">Generate</div>
+                </div>
+              </div>
+            </div>
+
+            <section className="designer-section">
+              <div className="step-header">
+                <span className="step-number" style={{ background: '#6366f1' }}>1</span>
+                <h3>Select Historical Thinking Skill</h3>
+              </div>
+              <p className="section-description">What historical thinking skill will students engage with?</p>
+              <select value={selectedSkillId} onChange={handleSkillChange} className="skill-select">
+                <option value="">-- Select a skill --</option>
+                {historySkillsData.map(skill => (
+                  <option key={skill.id} value={skill.id}>{skill.title} ({skill.standards})</option>
+                ))}
+              </select>
+              {selectedSkill && <p className="skill-description">{selectedSkill.description}</p>}
+            </section>
+
+            <section className="designer-section">
+              <div className="step-header">
+                <span className="step-number" style={{ background: '#6366f1' }}>2</span>
+                <h3>Provide Lesson Context</h3>
+              </div>
+              <p className="section-description">Describe your lesson including historical period, sources being used, grade level, and curriculum.</p>
+              <textarea
+                placeholder="e.g., 10th grade World History students are analyzing primary sources from the Industrial Revolution as part of our OER Project unit. They're examining a factory owner's journal, a parliamentary report on child labor, and a political cartoon from the era..."
+                value={lessonInputs.lessonContext}
+                onChange={(e) => handleInputChange('lessonContext', e.target.value)}
+                rows={6}
+                className="context-textarea"
+              />
+            </section>
+
+            <section className="designer-section" style={{ opacity: selectedSkill ? 1 : 0.5 }}>
+              <div className="step-header">
+                <span className="step-number" style={{ background: '#6366f1' }}>3</span>
+                <h3>Select AI Moves</h3>
+              </div>
+              <p className="section-description">Select moves from the Neutral and Uphold Rigor tiers that fit this skill.</p>
+
+              {!selectedSkill ? (
+                <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)', background: 'var(--color-bg)', borderRadius: 'var(--radius-md)', border: '1px dashed var(--color-border)' }}>
+                  <p>Please select a Historical Thinking Skill above to see available AI moves.</p>
+                </div>
+              ) : (
+                <>
+                  <div className="tier-block">
+                    <div className="tier-block-header">
+                      <span className="tier-dot neutral"></span>
+                      <span className="tier-block-label neutral">Neutral — AI Provides, Student Decides</span>
+                    </div>
+                    <div className="principles-list">
+                      {aiExtensionPrinciples.filter(p => p.tier === 'neutral').map(principle => {
+                        const moves = neutralMoves[principle.id];
+                        if (!moves || moves.length === 0) return null;
+                        return renderPrincipleDropdown(principle.id, moves, 'amber');
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="tier-block">
+                    <div className="tier-block-header">
+                      <span className="tier-dot uphold"></span>
+                      <span className="tier-block-label uphold">Uphold Rigor — AI Creates Thinking Conditions</span>
+                    </div>
+                    <div className="principles-list">
+                      {aiExtensionPrinciples.filter(p => p.tier === 'uphold').map(principle => {
+                        const moves = upholdMoves[principle.id];
+                        if (!moves || moves.length === 0) return null;
+                        return renderPrincipleDropdown(principle.id, moves, 'green');
+                      })}
+                    </div>
+                  </div>
+
+                  {selectedMoves.length > 0 && (
+                    <div className="selection-summary">
+                      <p><strong>{selectedMoves.length} move{selectedMoves.length !== 1 ? 's' : ''} selected</strong></p>
+                    </div>
+                  )}
+
+                  <div className="generate-section" style={{ marginTop: '1.5rem' }}>
+                    <button
+                      onClick={() => {}}
+                      disabled={selectedMoves.length === 0 || isGenerating}
+                      className="generate-button"
+                      style={{ background: selectedMoves.length === 0 || isGenerating ? '#d1d5db' : '#6366f1' }}
+                    >
+                      <Sparkles size={20} />
+                      Generate Lesson Materials
+                    </button>
+                  </div>
+                </>
+              )}
+            </section>
+          </div>
+        )}
+      </main>
+
+    </div>
+  );
+}
+
+// ============================================
 // MATH FRAMEWORK COMPONENT
 // ============================================
 function MathFramework({ onBack }) {
@@ -3304,6 +4711,7 @@ function App() {
         <LandingPage
           onSelectMath={() => setCurrentView('math')}
           onSelectScience={() => setCurrentView('science')}
+          onSelectHistory={() => setCurrentView('history')}
         />
       )}
       {currentView === 'math' && (
@@ -3311,6 +4719,9 @@ function App() {
       )}
       {currentView === 'science' && (
         <ScienceFramework onBack={() => setCurrentView('landing')} />
+      )}
+      {currentView === 'history' && (
+        <HistoryFramework onBack={() => setCurrentView('landing')} />
       )}
     </div>
   );

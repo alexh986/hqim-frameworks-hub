@@ -3422,134 +3422,6 @@ const historySkillsData = [
 ];
 
 // ============================================
-// HISTORY CASE STUDIES
-// ============================================
-const historyCaseStudies = [
-  {
-    id: 1,
-    title: "Sourcing the Black Death",
-    skill: "Sourcing",
-    lesson: "OER Project: Source Collection – The Black Death",
-    description: "In this lesson from OER Project's World History course, students analyze primary sources about the fourteenth-century pandemic including accounts from Ibn Battuta, Giovanni Boccaccio, and medieval physicians. Using the HAH Cycle, students first complete the Quick Sourcing Tool independently—identifying author, purpose, audience, and point of view for each source.",
-    tieredPrompts: {
-      collapseRigor: [
-        { prompt: "Is this source reliable? Tell me its biases." },
-        { prompt: "What is the purpose and audience of this document?" }
-      ],
-      neutral: [
-        { principleId: 'mirroring', prompt: "Summarize my analysis of this source's reliability. Does my reasoning sound complete when you say it back?" },
-        { principleId: 'information', prompt: "What were the typical social positions and literacy rates in 14th-century Florence? Give me context without interpreting my source." },
-        { principleId: 'feedback', prompt: "What standard sourcing questions have I not addressed? Point them out without answering them." }
-      ],
-      upholdRigor: [
-        { principleId: 'socratic', prompt: "Ask me what evidence I have for my claims about who wrote this source and why." },
-        { principleId: 'resistance', prompt: "I identified Boccaccio as a reliable eyewitness. Challenge me—what might his perspective as a Florentine elite cause him to overlook?" },
-        { principleId: 'complexity', prompt: "What other possible purposes might this source have served that I haven't considered?" }
-      ]
-    },
-    returnToHuman: "Students return to their sources with new questions, ultimately producing richer analysis that acknowledges the limits of each source while still extracting historical value from them."
-  },
-  {
-    id: 2,
-    title: "Causation and the Industrial Revolution",
-    skill: "Causation",
-    lesson: "OER Project: Causation – Origins of the Industrial Revolution",
-    description: "OER Project's Industrial Revolution unit asks students to grapple with a deceptively simple question: Why did industrialization begin in Britain? Using the HAH Cycle, students first brainstorm potential causes independently, categorizing them as long-term (centuries of agricultural change), intermediate (colonial trade networks), and short-term (specific inventions). They create an initial causal map showing connections between factors.",
-    tieredPrompts: {
-      collapseRigor: [
-        { prompt: "What caused the Industrial Revolution?" },
-        { prompt: "Explain the connection between coal and industrialization." }
-      ],
-      neutral: [
-        { principleId: 'mirroring', prompt: "Summarize my causal map. What factors am I emphasizing and which am I downplaying?" },
-        { principleId: 'information', prompt: "What were Britain's coal reserves compared to other European nations? Give me the data without drawing conclusions." },
-        { principleId: 'feedback', prompt: "Where is my causal reasoning underdeveloped? Point to weak links without fixing them." }
-      ],
-      upholdRigor: [
-        { principleId: 'socratic', prompt: "Ask me about the specific mechanisms connecting my identified causes to industrialization. How does one factor lead to the next?" },
-        { principleId: 'resistance', prompt: "I ranked coal availability as more significant than colonial trade networks. Challenge my causal weighting—how do I know which was more important?" },
-        { principleId: 'complexity', prompt: "What structural vs. contingent factors am I considering? Could industrialization have happened differently?" },
-        { principleId: 'simulation', prompt: "If coal hadn't been available in Britain, would industrialization still have occurred? Help me test my causal claims." }
-      ]
-    },
-    returnToHuman: "Students revise their causal maps based on these challenges, producing more sophisticated multi-causal explanations that trace mechanisms and acknowledge complexity."
-  },
-  {
-    id: 3,
-    title: "Comparing Atlantic Revolutions",
-    skill: "Comparison",
-    lesson: "OER Project: The Atlantic Revolutions",
-    description: "In studying the wave of revolutions from 1775-1825, OER Project asks students to compare the American, French, and Haitian Revolutions. The HAH Cycle begins with students independently completing a comparison chart, identifying similarities and differences across categories: causes, key actors, ideologies, outcomes, and lasting impacts. Students note their initial thesis about what the comparison reveals.",
-    tieredPrompts: {
-      collapseRigor: [
-        { prompt: "What are the similarities and differences between the American and French Revolutions?" },
-        { prompt: "Write a thesis comparing the Atlantic Revolutions." }
-      ],
-      neutral: [
-        { principleId: 'mirroring', prompt: "Summarize my comparison. Does my analysis of similarities and differences sound balanced?" },
-        { principleId: 'information', prompt: "What were the formal declarations or founding documents of each revolution? List them without analysis." },
-        { principleId: 'feedback', prompt: "Where have I identified patterns without explaining them? Point to gaps in my analysis." }
-      ],
-      upholdRigor: [
-        { principleId: 'socratic', prompt: "Ask me why I chose these particular categories for comparison. What other categories might reveal important insights?" },
-        { principleId: 'resistance', prompt: "I found that all three revolutions were inspired by Enlightenment ideals. Challenge me—is this similarity superficial or significant?" },
-        { principleId: 'complexity', prompt: "How were Enlightenment ideals interpreted differently by enslaved Haitians versus American slaveholders? Push me to see meaningful differences." }
-      ]
-    },
-    returnToHuman: "Students return to refine their comparative thesis, moving beyond surface similarities to explain meaningful patterns and variations across the Atlantic revolutionary moment."
-  },
-  {
-    id: 4,
-    title: "Contextualizing the Mongol Empire",
-    skill: "Contextualization",
-    lesson: "OER Project: Source Collection – Mongol Empire",
-    description: "OER Project's unit on the Mongol Empire requires students to contextualize primary sources from across Afro-Eurasia. Before engaging with AI, students work independently to establish both broad context (Eurasian trade networks, nomadic pastoral societies, technological developments) and narrow context (specific circumstances of Mongol expansion, the reign of Genghis Khan). They categorize their context notes and identify causal links between context and events.",
-    tieredPrompts: {
-      collapseRigor: [
-        { prompt: "What was the historical context of the Mongol Empire?" },
-        { prompt: "Explain why the Mongols were able to conquer so much territory." }
-      ],
-      neutral: [
-        { principleId: 'mirroring', prompt: "Summarize my contextual analysis. Does my reasoning about background factors sound complete?" },
-        { principleId: 'information', prompt: "What were the major trade routes crossing Central Asia before the Mongol conquests? Give me geographic information without interpretation." },
-        { principleId: 'feedback', prompt: "Am I balancing broad and narrow context appropriately? Point to imbalances without correcting them." }
-      ],
-      upholdRigor: [
-        { principleId: 'socratic', prompt: "Ask me about how location and geography shaped Mongol expansion. What geographic factors am I considering?" },
-        { principleId: 'resistance', prompt: "I've balanced broad and narrow context. Challenge me—am I overgeneralizing about nomadic societies?" },
-        { principleId: 'complexity', prompt: "Ask me how this event looks different at local, regional, and global scales. Am I considering all scales?" },
-        { principleId: 'simulation', prompt: "How would people living in this context have understood their situation? Help me think through their worldview." }
-      ]
-    },
-    returnToHuman: "Students revise their contextualization, producing analysis that situates Mongol expansion within multiple overlapping contexts while avoiding anachronistic assumptions."
-  },
-  {
-    id: 5,
-    title: "CCOT: Networks of Exchange 1200-1450",
-    skill: "Continuity & Change Over Time",
-    lesson: "OER Project: Networks of Exchange Unit",
-    description: "OER Project's unit on Networks of Exchange (1200-1450 CE) culminates in students analyzing what changed and what stayed the same in Afro-Eurasian trade networks. Using the HAH Cycle, students first complete a CCOT chart independently—listing changes (expansion of Mongol trade routes, spread of the Black Death, new maritime technologies) and continuities (persistence of Silk Road patterns, continued importance of luxury goods, ongoing role of merchant diasporas). They draft an initial thesis assessing significance.",
-    tieredPrompts: {
-      collapseRigor: [
-        { prompt: "What changed and what stayed the same in trade networks from 1200-1450?" },
-        { prompt: "Write a CCOT thesis about the Silk Road." }
-      ],
-      neutral: [
-        { principleId: 'mirroring', prompt: "Whose experience of this period am I centering? Help me see what perspectives I'm privileging." },
-        { principleId: 'information', prompt: "What were the major goods traded along the Silk Road during this period? List commodities without analyzing significance." },
-        { principleId: 'feedback', prompt: "Am I focusing too much on change and not enough on continuity? Point to imbalances." }
-      ],
-      upholdRigor: [
-        { principleId: 'socratic', prompt: "Ask me what criteria I'm using to decide whether something is a change or a continuity." },
-        { principleId: 'resistance', prompt: "I argue the Black Death represents the most significant change. Challenge this—how quickly did trade recover?" },
-        { principleId: 'complexity', prompt: "Ask me about whether change happened at the same pace for all groups and in all areas." }
-      ]
-    },
-    returnToHuman: "Students revise their analysis to acknowledge that what appears as dramatic change from one perspective may look like continuity from another, producing more nuanced CCOT essays."
-  }
-];
-
-// ============================================
 // HISTORY FRAMEWORK COMPONENT
 // ============================================
 function HistoryFramework({ onBack }) {
@@ -3862,102 +3734,6 @@ function HistoryFramework({ onBack }) {
     );
   };
 
-  // History Case Study Card component
-  const HistoryCaseStudyCard = ({ study }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-
-    return (
-      <div className="case-study-card">
-        <button onClick={() => setIsExpanded(!isExpanded)} className="case-study-header">
-          <div className="case-study-left">
-            <span className="case-study-skill">{study.skill}</span>
-            <h3 className="case-study-title">{study.title}</h3>
-            <p className="case-study-lesson">{study.lesson}</p>
-          </div>
-          {isExpanded ? <ChevronUp className="chevron" /> : <ChevronDown className="chevron" />}
-        </button>
-
-        {isExpanded && (
-          <div className="case-study-content">
-            <p className="case-study-description">{study.description}</p>
-
-            {study.tieredPrompts && (
-              <div className="tiered-prompts">
-                {/* Collapse Rigor */}
-                <div className="prompt-tier">
-                  <div className="tier-title">
-                    <span className="tier-dot collapse"></span>
-                    <span className="tier-name collapse">Collapse Rigor — What to Avoid</span>
-                  </div>
-                  <div className="prompt-list">
-                    {study.tieredPrompts.collapseRigor.map((item, idx) => (
-                      <div key={idx} className="prompt-item collapse">
-                        <p className="prompt-text">"{item.prompt}"</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Neutral */}
-                <div className="prompt-tier">
-                  <div className="tier-title">
-                    <span className="tier-dot neutral"></span>
-                    <span className="tier-name neutral">Neutral — AI Provides, Student Decides</span>
-                  </div>
-                  <div className="prompt-list">
-                    {study.tieredPrompts.neutral.map((item, idx) => {
-                      const principle = aiExtensionPrinciples.find(p => p.id === item.principleId);
-                      const PrincipleIcon = principle?.icon || HelpCircle;
-                      return (
-                        <div key={idx} className="prompt-item neutral">
-                          <div className="prompt-principle">
-                            <PrincipleIcon size={14} />
-                            <span>{principle?.name}</span>
-                          </div>
-                          <p className="prompt-text">"{item.prompt}"</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Uphold Rigor */}
-                <div className="prompt-tier">
-                  <div className="tier-title">
-                    <span className="tier-dot uphold"></span>
-                    <span className="tier-name uphold">Uphold Rigor — AI Creates Thinking Conditions</span>
-                  </div>
-                  <div className="prompt-list">
-                    {study.tieredPrompts.upholdRigor.map((item, idx) => {
-                      const principle = aiExtensionPrinciples.find(p => p.id === item.principleId);
-                      const PrincipleIcon = principle?.icon || HelpCircle;
-                      return (
-                        <div key={idx} className="prompt-item uphold">
-                          <div className="prompt-principle">
-                            <PrincipleIcon size={14} />
-                            <span>{principle?.name}</span>
-                          </div>
-                          <p className="prompt-text">"{item.prompt}"</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {study.returnToHuman && (
-              <div className="return-to-human-box">
-                <h4>Return to Human</h4>
-                <p>{study.returnToHuman}</p>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div className="app-container">
       {/* Header */}
@@ -4216,9 +3992,95 @@ function HistoryFramework({ onBack }) {
               </p>
             </section>
 
-            {historyCaseStudies.map(study => (
-              <HistoryCaseStudyCard key={study.id} study={study} />
-            ))}
+            {/* Case Study 1: Sourcing the Black Death */}
+            <CaseStudyCard
+              icon={FileText}
+              iconBg="#fef3c7"
+              iconColor="#d97706"
+              title="Sourcing the Black Death"
+              meta="OER Project: Source Collection – The Black Death • Skill: Sourcing"
+              humanLift="Students independently analyze primary sources about the fourteenth-century pandemic including accounts from Ibn Battuta, Giovanni Boccaccio, and medieval physicians. Using the Quick Sourcing Tool, students identify author, purpose, audience, and point of view for each source before engaging with AI."
+              aiRole="Source Interrogator"
+              aiDescription="Students use AI to probe their sourcing analysis, challenging their assumptions about reliability and perspective."
+              aiPrompts={[
+                { principle: 'Socratic Questioning', icon: HelpCircle, prompt: "Ask me what evidence I have for my claims about who wrote this source and why." },
+                { principle: 'Productive Resistance', icon: Shield, prompt: "I identified Boccaccio as a reliable eyewitness. Challenge me—what might his perspective as a Florentine elite cause him to overlook?" },
+                { principle: 'Complexity Injection', icon: Layers, prompt: "What other possible purposes might this source have served that I haven't considered?" }
+              ]}
+              returnToHuman="Students return to their sources with new questions, ultimately producing richer analysis that acknowledges the limits of each source while still extracting historical value from them."
+            />
+
+            {/* Case Study 2: Causation and the Industrial Revolution */}
+            <CaseStudyCard
+              icon={TrendingUp}
+              iconBg="#d1fae5"
+              iconColor="#059669"
+              title="Causation and the Industrial Revolution"
+              meta="OER Project: Origins of the Industrial Revolution • Skill: Causation"
+              humanLift="Students independently brainstorm potential causes of industrialization, categorizing them as long-term (centuries of agricultural change), intermediate (colonial trade networks), and short-term (specific inventions). They create an initial causal map showing connections between factors."
+              aiRole="Causation Analyst"
+              aiDescription="Students use AI to challenge their causal reasoning and surface overlooked factors."
+              aiPrompts={[
+                { principle: 'Socratic Questioning', icon: HelpCircle, prompt: "Ask me about the specific mechanisms connecting my identified causes to industrialization. How does one factor lead to the next?" },
+                { principle: 'Productive Resistance', icon: Shield, prompt: "I ranked coal availability as more significant than colonial trade networks. Challenge my causal weighting—how do I know which was more important?" },
+                { principle: 'Complexity Injection', icon: Layers, prompt: "What structural vs. contingent factors am I considering? Could industrialization have happened differently?" }
+              ]}
+              returnToHuman="Students revise their causal maps based on these challenges, producing more sophisticated multi-causal explanations that trace mechanisms and acknowledge complexity."
+            />
+
+            {/* Case Study 3: Comparing Atlantic Revolutions */}
+            <CaseStudyCard
+              icon={Grid3X3}
+              iconBg="#ede9fe"
+              iconColor="#7c3aed"
+              title="Comparing Atlantic Revolutions"
+              meta="OER Project: The Atlantic Revolutions • Skill: Comparison"
+              humanLift="Students independently complete a comparison chart for the American, French, and Haitian Revolutions, identifying similarities and differences across categories: causes, key actors, ideologies, outcomes, and lasting impacts. Students note their initial thesis about what the comparison reveals."
+              aiRole="Comparison Coach"
+              aiDescription="Students use AI to challenge superficial comparisons and push for deeper analysis."
+              aiPrompts={[
+                { principle: 'Socratic Questioning', icon: HelpCircle, prompt: "Ask me why I chose these particular categories for comparison. What other categories might reveal important insights?" },
+                { principle: 'Productive Resistance', icon: Shield, prompt: "I found that all three revolutions were inspired by Enlightenment ideals. Challenge me—is this similarity superficial or significant?" },
+                { principle: 'Complexity Injection', icon: Layers, prompt: "How were Enlightenment ideals interpreted differently by enslaved Haitians versus American slaveholders? Push me to see meaningful differences." }
+              ]}
+              returnToHuman="Students return to refine their comparative thesis, moving beyond surface similarities to explain meaningful patterns and variations across the Atlantic revolutionary moment."
+            />
+
+            {/* Case Study 4: Contextualizing the Mongol Empire */}
+            <CaseStudyCard
+              icon={BookOpen}
+              iconBg="#cffafe"
+              iconColor="#0891b2"
+              title="Contextualizing the Mongol Empire"
+              meta="OER Project: Source Collection – Mongol Empire • Skill: Contextualization"
+              humanLift="Students independently establish both broad context (Eurasian trade networks, nomadic pastoral societies, technological developments) and narrow context (specific circumstances of Mongol expansion, the reign of Genghis Khan). They categorize their context notes and identify causal links between context and events."
+              aiRole="Context Challenger"
+              aiDescription="Students use AI to pressure-test their contextual claims and surface missing connections."
+              aiPrompts={[
+                { principle: 'Socratic Questioning', icon: HelpCircle, prompt: "Ask me about how location and geography shaped Mongol expansion. What geographic factors am I considering?" },
+                { principle: 'Productive Resistance', icon: Shield, prompt: "I've balanced broad and narrow context. Challenge me—am I overgeneralizing about nomadic societies?" },
+                { principle: 'Complexity Injection', icon: Layers, prompt: "Ask me how this event looks different at local, regional, and global scales. Am I considering all scales?" }
+              ]}
+              returnToHuman="Students revise their contextualization, producing analysis that situates Mongol expansion within multiple overlapping contexts while avoiding anachronistic assumptions."
+            />
+
+            {/* Case Study 5: CCOT: Networks of Exchange */}
+            <CaseStudyCard
+              icon={RotateCw}
+              iconBg="#fae8ff"
+              iconColor="#a855f7"
+              title="CCOT: Networks of Exchange 1200-1450"
+              meta="OER Project: Networks of Exchange Unit • Skill: Continuity & Change Over Time"
+              humanLift="Students independently complete a CCOT chart—listing changes (expansion of Mongol trade routes, spread of the Black Death, new maritime technologies) and continuities (persistence of Silk Road patterns, continued importance of luxury goods, ongoing role of merchant diasporas). They draft an initial thesis assessing significance."
+              aiRole="CCOT Analyst"
+              aiDescription="Students use AI to challenge their CCOT claims and surface overlooked patterns."
+              aiPrompts={[
+                { principle: 'Socratic Questioning', icon: HelpCircle, prompt: "Ask me what criteria I'm using to decide whether something is a change or a continuity." },
+                { principle: 'Productive Resistance', icon: Shield, prompt: "I argue the Black Death represents the most significant change. Challenge this—how quickly did trade recover?" },
+                { principle: 'Complexity Injection', icon: Layers, prompt: "Ask me about whether change happened at the same pace for all groups and in all areas." }
+              ]}
+              returnToHuman="Students revise their analysis to acknowledge that what appears as dramatic change from one perspective may look like continuity from another, producing more nuanced CCOT essays."
+            />
           </div>
         )}
 
